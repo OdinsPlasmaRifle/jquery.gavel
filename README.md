@@ -6,7 +6,6 @@ Version 1 released.
 Still need to add:
 
 * Custom 'each' and 'all' functions.
-* Multiple instantiations per page
 * Documentation/comments
 * Minified dist files
 * Bower support

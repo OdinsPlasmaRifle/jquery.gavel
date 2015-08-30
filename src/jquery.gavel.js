@@ -56,7 +56,7 @@
 	    },
 
 	    attachHandlers: function() {
-	    	var _self = this; 
+	    	var _self = this;
 
 	        $.each(_self.config.inputEvents, function(index, inputEvent) {
 	        	$(_self.element).on(inputEvent, '*[data-gavel]', function(e) {
@@ -65,7 +65,7 @@
 			});
 
 	        $.each(_self.config.formEvents, function(index, formEvent) {
-	        	$(document).on(formEvent, _self.element, function(e) {
+	        	$(_self.element).on(formEvent, function(e) {
 	          		var res = _self.initFormValidate($(this));
 	          		if(res.error) {
 	          			e.preventDefault();
