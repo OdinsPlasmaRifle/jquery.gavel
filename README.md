@@ -3,7 +3,7 @@ Simple jQuery validation plugin
 
 Version 1.1
 
-This version contains fully customizabel validation and teh ability to add additional validation via either regex or a custom function
+This version contains fully customizable validation and the ability to add additional validation via either regex or a custom function
 
 Incomplete:
 
