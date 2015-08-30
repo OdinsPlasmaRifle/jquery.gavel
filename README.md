@@ -1,17 +1,13 @@
 # jquery.gavel
 Simple jQuery validation plugin
 
-Version 1 released.
+Version 1.1
 
-Still need to add:
+This version contains fully customizabel validation and teh ability to add additional validation via either regex or a custom function
 
-* Custom 'each' and 'all' functions.
+Incomplete:
+
 * Documentation/comments
 * Minified dist files
 * Bower support
-
-Issues:
-
-* Telephone number validation only works on local ZA numbers:
-
-	-> (000)0000000/000-0000000/000-000-0000/(000)000-0000
+* test in other versions of jQuery

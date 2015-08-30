@@ -5,29 +5,92 @@
         <script type="text/javascript" src="../src/jquery.gavel.js"></script>
         <script>
             $(document).ready(function(){
-                $("#example").gavel();
-                $("#example2").gavel();
-            });
+
+                // Can use the following to call Gavel with default values:
+                //
+                // $("#example").gavel() 
+                //
+                // Otherwise overide the defaults like:
+
+                $("#example").gavel({
+                    afterEach      : testEachFunction,
+                    afterAll       : testAllFunction,
+                    validation : {
+                        custom1 : { // This is how you add a custom validation rule that calls a function
+                            message : 'Must equal 123 - the following is a tag replaced value: {tag1}!', //specify replacements in the functions return
+                            regex   : null,
+                            method  : custom1Function
+                        },
+                        custom2 : { // This is how you add a custom validation rule that use regex
+                            message : 'Required - the following is a tag replaced value!', // tag replacement is not available for regex validation
+                            regex   : /\S+/,
+                            method  : null
+                        }                        
+                    }
+                });
+
+                // Custom user specified function that occurs after each element is validated
+                // User for commo/generic things that should occur on every element's validation
+                function testEachFunction(valid, element) {
+                    // To overide an elements validity change the 'valid' object like this:
+                    // valid.error = true;
+                    // valid.message = 'Form Test error';
+                    //
+                    // Example:
+
+                    // take note the following should be done through the validation functionality rratehr than here
+                    if(element.attr('name') === 'example_input1' && element.val() !== 'asd') {
+                        valid.error = true;
+                        valid.message = "This field must have a value of 'asd'";
+                    }
+
+                    return valid;
+                }
+
+                // Custom user specified function that occurs after the whole form is validated
+                function testAllFunction(valid, form) {
+                    // To overide a forms validity change the 'valid' object like this: 
+                    // valid.error = true;
+                    // valid.message = 'Form Test error';
+
+                    return valid;
+                }
+
+                function custom1Function(element, extra) {
+                    // Return a boolean of false or true to indicate validity like:
+                    // 
+                    // return false
+                    //
+                    // or return an object containing tags that can be used to replace message placeholders, like:
+                    //
+                    // return {error: true, tags: {'tag1': 'value1'}}
+                    // 
+                    // the extra filed will contain any value placed between brackets in the rule, for instance ruleName[extraValues]
+
+                    if(element.val() !== '123') {
+                        return {error: true, tags: {'{tag1}': 'Replaced Tag'}};  
+                    } else {
+                        return false;
+                    }                             
+                }                
+            });           
         </script>
     </head>
     <body>
-        <form method="GET" name="example" id="example">
+        <form method="GET" name="example" id="example">    
             <label for="example_input1">Required Field</label><br/>
             <input name="example_input1" type="text" data-gavel="" data-gavel-rules="required"/><br/>
-            <label for="example_input2">Required Field</label><br/>
-            <input name="example_input2" type="text" data-gavel="" data-gavel-rules="email"/><br/>
-            <label for="example_input3">Required Field</label><br/>
-            <input name="example_input3" type="text" data-gavel="" data-gavel-rules="telephone"/><br/>
-            <input value="Submit" type="submit"/>
-        </form>
-        <form method="GET" name="example2" id="example2">
-            <label for="example_input1">Required Field</label><br/>
-            <input name="example_input1" type="text" data-gavel="" data-gavel-rules="required"/><br/>
-            <label for="example_input2">Required Field</label><br/>
-            <input name="example_input2" type="text" data-gavel="" data-gavel-rules="email"/><br/>
-            <label for="example_input3">Required Field</label><br/>
-            <input name="example_input3" type="text" data-gavel="" data-gavel-rules="telephone"/><br/>
-            <input value="Submit" type="submit"/>
+
+            <label for="example_input2">Match Field</label><br/>
+            <input name="example_input2" type="text" data-gavel="" data-gavel-rules="required|match[example_input1]"/><br/>
+
+            <label for="example_input3">Email with min/max</label><br/>
+            <input name="example_input3" type="text" data-gavel="" data-gavel-rules="email|min[10]|max[15]"/><br/>
+
+            <label for="example_input4">Custom Field</label><br/>
+            <input name="example_input4" type="text" data-gavel="" data-gavel-rules="custom1"/><br/>
+
+            <input value="Submit" id="submit" type="submit"/>
         </form>
     </body>    
 </html>    
