@@ -29,17 +29,17 @@
 	Gavel.prototype = {
 
 		defaults: {
-			errorText      : true, // Indicates whether a text error should be outputted
-			errorContainer : 'span', // The HTML element used to output text errors
+			errorText      : true,		   // Indicates whether a text error should be outputted
+			errorContainer : 'span', 	   // The HTML element used to output text errors
 			errorClass     : 'gavelError', // Class used for the errorContainer
-			afterEach      : null, // Function called after each input is validated
-			afterAll       : null, // Function called once the form has been validated
-			initiated      : false, // Indicates whether the plugin has been initiated yet
-			validation     : { // Validation types
+			afterEach      : null,		   // Function called after each input is validated
+			afterAll       : null,		   // Function called once the form has been validated
+			initiated      : false,		   // Indicates whether the plugin has been initiated yet
+			validation     : {			   // Validation types
 				required : {
 					message : "This is a required field", // Error message
-					regex   : /\S+/, // Regex validation
-					method  : null // method to call - custom or plugin specific
+					regex   : /\S+/, 					  // Regex validation
+					method  : null						  // method to call - custom or plugin specific
 				},
 				alphanumeric : {
 					message : "Only alphanumeric characters are permitted",
@@ -74,30 +74,33 @@
 				min : {
 					message : "The min characters permitted is {min}",
 					regex   : null,
-					method  : 'validateMin' // Built in custom function
+					method  : 'validateMin'  // Built in custom function
 				},
 				max : {
 					message : "The max characters permitted is {max}",
 					regex   : null,
-					method  : 'validateMax' // Built in custom function
+					method  : 'validateMax'  // Built in custom function
 				}
 			},
-			inputEvents    : ['keyup', 'change', 'blur'], // Events that should be fired off for each form input
-			formEvents     : ['submit'] // Events that should be fire off for the form
+			inputEvents    : ['keyup', 'change', 'blur'], // Input events 
+			formEvents     : ['submit'] 				  // Form events
 		},
 
 		init: function() {
-			.config = $.extend(true, {}, self.defaults, self.options);
+			// Extend default options with user options
+			self.config = $.extend(true, {}, self.defaults, self.options);
 			self.attachHandlers();
 		},
 
 		attachHandlers: function() {
+			// Attach event(s) to each gavel element
 			$.each(self.config.inputEvents, function(index, inputEvent) {
 				$(self.element).on(inputEvent, '*[data-gavel]', function(e) {
 						self.initValidate($(this));
 				});
 			});
 
+			// Attach event(s) to the gavel form
 			$.each(self.config.formEvents, function(index, formEvent) {
 				$(self.element).on(formEvent, function(e) {
 						var res = self.initFormValidate($(this));
@@ -116,6 +119,7 @@
 				message : ''
 			};
 
+			// Run validate on each gavel form element
 			$(form).find('*[data-gavel]').each(function() {
 				var tempRes = self.initValidate($(this));
 				if (!res.error) {
@@ -123,7 +127,7 @@
 				}
 			});
 
-			// Trigger the user specified function - can be used to overide the final validity of the form
+			// Trigger user afterAll function
 			if(self.config.afterAll !== null) {
 				var userRes = self.config.afterAll.call(self, res, form);
 				if ('error' in userRes && 'message' in userRes) {
@@ -135,11 +139,13 @@
 		},
 
 		initValidate: function(element) {
+			// Clear element's current errors
 			self.clearError(element);
 
+			// Validate the element
 			var res = self.validate(element)
 
-			// Trigger the user specified function - can be used to overide the final validity of an element
+			// Trigger user afterEach function
 			if (self.config.afterEach !== null) {
 				var userRes = self.config.afterEach.call(self, res, element);
 				if ('error' in userRes && 'message' in userRes) {
@@ -147,6 +153,7 @@
 				}
 			}
 
+			// Outpust an error if one exists
 			if (res.error) {
 				self.outPutError(element, res.message);
 			}
@@ -160,10 +167,13 @@
 				message : ''
 			};
 
+			// Check if a valid element with gavel rules
 			if (typeof element !== 'undefined' && typeof element.data('gavel-rules') !== 'undefined') {
+				// Get all gavel rules on an element
 				var rules = element.data('gavel-rules').split('|');
+				// Loop through each rule
 				$.each(rules, function(index, rule) {
-					// If regex validated field
+					// If a regex validated field use regex to validate
 					if (rule in self.config.validation && typeof self.config.validation[rule]['regex'] !== 'undefined' &&
 							self.config.validation[rule]['regex'] !== null) {
 						if (!element.val().match(self.config.validation[rule]['regex'])) {
@@ -172,13 +182,15 @@
 							}
 							res.error = true;
 						}
+					// Otherwise use a function to validate	
 					} else {
-						// Split off brackets if they exist
 						var funcRes = null;
+						// Split off brackets if they exist
 						var split = rule.split('[');
 						var splitRule = split[0];
-						var brackets = rule.match(/^[a-zA-Z0-9 .-\_]+\[([^)]+)\]$/);
 
+						// Get value between brackets
+						var brackets = rule.match(/^[a-zA-Z0-9 .-\_]+\[([^)]+)\]$/);
 						brackets = (brackets && typeof brackets[1] !== 'undefined') ?  brackets[1] : '';
 
 						// Built in functions
@@ -190,8 +202,9 @@
 							funcRes = self.config.validation[splitRule]['method'].call(self, element, brackets)
 						}
 						// Create error message
-						if (funcRes || (funcRes && 'error' in funcRes && funcRes.error)) {
+						if (!funcRes || (typeof funcRes === 'object' && 'error' in funcRes && funcRes.error)) {
 							if(typeof self.config.validation[splitRule]['message'] !== 'undefined') {
+								// Do tag replacement on message if tags exist
 								if(typeof funcRes === 'object'  && 'tags' in funcRes && typeof funcRes.tags === 'object') {
 									res.message = self.replaceCustomTags(funcRes.tags, self.config.validation[splitRule]['message']);
 								} else {
@@ -208,7 +221,7 @@
 
 		// Built in field match validation
 		validateMatch: function(element, match) {
-			var res = false;
+			var res = true;
 			if(match) {
 				match = $('*[name="' + self.addSlashes(match) +'"]');
 				if (match.val() !== element.val()) {
@@ -221,7 +234,7 @@
 
 		// Built in field min validation
 		validateMin: function(element, min) {
-			var res = false;
+			var res = true;
 			min = self.addSlashes(min);
 			if (min && element.val().length < min) {
 				res = {};
@@ -233,7 +246,7 @@
 
 		// Built in field max validation
 		validateMax: function(element, max) {
-			var res = false;
+			var res = true;
 			max = self.addSlashes(max);
 			if (max && element.val().length > max) {
 				res = {};
@@ -243,12 +256,12 @@
 			return res;
 		},
 
-		// Escape string
+		// Escape strings
 		addSlashes: function(string) {
 			return (string + '').replace(/[\\\[\]"']/g, '\\$&').replace(/\u0000/g, '\\0');
 		},
 
-		// Replace custom tags
+		// Replace custom tags in a string
 		replaceCustomTags: function(tags, string) {
 			$.each(tags, function(tag, value) {
 				string = string.replace(tag, value);
