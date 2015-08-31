@@ -10,4 +10,4 @@ Incomplete:
 * Documentation/comments
 * Minified dist files
 * Bower support
-* test in other versions of jQuery
+* Test in other versions of jQuery

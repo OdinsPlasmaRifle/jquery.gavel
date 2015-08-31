@@ -1,6 +1,4 @@
-/* vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker:
- * 
- * _____     _ _           ______ _                          ______ _  __ _
+/* _____     _ _           ______ _                          ______ _  __ _
  *|  _  |   | (_)          | ___ \ |                         | ___ (_)/ _| |
  *| | | | __| |_ _ __  ___ | |_/ / | __ _ ___ _ __ ___   __ _| |_/ /_| |_| | ___
  *| | | |/ _` | | '_ \/ __||  __/| |/ _` / __| '_ ` _ \ / _` |    /| |  _| |/ _ \
@@ -17,100 +15,100 @@
  *
  * You can find me at https://github.com/odinsplasmarifle
  *
- */   
+ */
 
 ;(function(window, $){
 
 	var Gavel = function(element, options){
-      	this.element  = element;
-      	this.$element = $(element);
-      	this.options  = options;
-      	self = this;
-    };
+		this.element  = element;
+		this.$element = $(element);
+		this.options  = options;
+		self = this;
+	};
 
 	Gavel.prototype = {
 
-	    defaults: {	
-	      	errorText      : true, // Indicates whether a text error should be outputted
-	      	errorContainer : 'span', // The HTML element used to output text errors
-	      	errorClass     : 'gavelError', // Class used for the errorContainer
-	      	afterEach      : null, // Function called after each input is validated
-	      	afterAll       : null, // Function called once the form has been validated
-	      	initiated      : false, // Indicates whether the plugin has been initiated yet	      	
-	      	validation : { // Validation types
-	      		required : {
-	      			message : "This is a required field", // Error message
-	      			regex   : /\S+/, // Regex validation
-	      			method  : null // method to call - custom or plugin specific
-	      		},
-	      		alphanumeric : {
-	      			message : "Only alphanumeric characters are permitted",
-	      			regex   : /^$|^(?=.*[A-Z0-9])[\w.,!"'-\/$ ]+$/i,
-	      			method  : null
-	      		},
-	      		numeric : {
-	      			message : "Only numeric characters are permitted",
-	      			regex   : /^$|^\d+(\.\d{1,2})?$/,
-	      			method  : null
-	      		},
-	      		alphabetic : {
-	      			message : "Only alphabetic characters are permitted",
-	      			regex   : /^$|^[a-zA-Z .-]+$/,
-	      			method  : null
-	      		},
-	      		email : {
-	      			message : "Only valid email addresses are permitted",
-	      			regex   : /^$|^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-	      			method  : null
-	      		},
-	      		telephone : {
-	      			message : "Only valid telephone numbers are permitted",
-	      			regex   : /^$|^[\(]?[0-9]{3}[\ \-\)]{0,2}[0-9]{3}[\ \-]?[0-9]{4}$/,
-	      			method  : null
-	      		},
-	      		match : {
-	      			message : "The fields must match",
-	      			regex   : null,
-	      			method  : 'validateMatch' // Built in custom function
-	      		},
-	      		min : {
-	      			message : "The min characters permitted is {min}",
-	      			regex   : null,
-	      			method  : 'validateMin' // Built in custom function
-	      		},
-	      		max : {
-	      			message : "The max characters permitted is {max}",
-	      			regex   : null,
-	      			method  : 'validateMax' // Built in custom function
-	      		}   			      		      			      			      			      			      			      		
-	      	},
-      		inputEvents    : ['keyup', 'change', 'blur'], // Events that should be fired off for each form input 
-      		formEvents     : ['submit'] // Events that should be fire off for the form
+		defaults: {
+			errorText      : true, // Indicates whether a text error should be outputted
+			errorContainer : 'span', // The HTML element used to output text errors
+			errorClass     : 'gavelError', // Class used for the errorContainer
+			afterEach      : null, // Function called after each input is validated
+			afterAll       : null, // Function called once the form has been validated
+			initiated      : false, // Indicates whether the plugin has been initiated yet
+			validation     : { // Validation types
+				required : {
+					message : "This is a required field", // Error message
+					regex   : /\S+/, // Regex validation
+					method  : null // method to call - custom or plugin specific
+				},
+				alphanumeric : {
+					message : "Only alphanumeric characters are permitted",
+					regex   : /^$|^(?=.*[A-Z0-9])[\w.,!"'-\/$ ]+$/i,
+					method  : null
+				},
+				numeric : {
+					message : "Only numeric characters are permitted",
+					regex   : /^$|^\d+(\.\d{1,2})?$/,
+					method  : null
+				},
+				alphabetic : {
+					message : "Only alphabetic characters are permitted",
+					regex   : /^$|^[a-zA-Z .-]+$/,
+					method  : null
+				},
+				email : {
+					message : "Only valid email addresses are permitted",
+					regex   : /^$|^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+					method  : null
+				},
+				telephone : {
+					message : "Only valid telephone numbers are permitted",
+					regex   : /^$|^[\(]?[0-9]{3}[\ \-\)]{0,2}[0-9]{3}[\ \-]?[0-9]{4}$/,
+					method  : null
+				},
+				match : {
+					message : "The fields must match",
+					regex   : null,
+					method  : 'validateMatch' // Built in custom function
+				},
+				min : {
+					message : "The min characters permitted is {min}",
+					regex   : null,
+					method  : 'validateMin' // Built in custom function
+				},
+				max : {
+					message : "The max characters permitted is {max}",
+					regex   : null,
+					method  : 'validateMax' // Built in custom function
+				}
+			},
+			inputEvents    : ['keyup', 'change', 'blur'], // Events that should be fired off for each form input
+			formEvents     : ['submit'] // Events that should be fire off for the form
 		},
 
-	    init: function() {
-	      	self.config = $.extend(true, {}, self.defaults, self.options);
-	      	self.attachHandlers();
-	    },
+		init: function() {
+			.config = $.extend(true, {}, self.defaults, self.options);
+			self.attachHandlers();
+		},
 
-	    attachHandlers: function() {
-	        $.each(self.config.inputEvents, function(index, inputEvent) {
-	        	$(self.element).on(inputEvent, '*[data-gavel]', function(e) {
-	          		self.initValidate($(this));
-	        	});
+		attachHandlers: function() {
+			$.each(self.config.inputEvents, function(index, inputEvent) {
+				$(self.element).on(inputEvent, '*[data-gavel]', function(e) {
+						self.initValidate($(this));
+				});
 			});
 
-	        $.each(self.config.formEvents, function(index, formEvent) {
-	        	$(self.element).on(formEvent, function(e) {
-	          		var res = self.initFormValidate($(this));
-	          		if (res.error) {
-	          			e.preventDefault();
-	          		}
-	        	});
+			$.each(self.config.formEvents, function(index, formEvent) {
+				$(self.element).on(formEvent, function(e) {
+						var res = self.initFormValidate($(this));
+						if (res.error) {
+							e.preventDefault();
+						}
+				});
 			});
 
-	      	self.config.initiated = true;
-	    },
+			self.config.initiated = true;
+		},
 
 		initFormValidate: function(form) {
 			var res = {
@@ -136,8 +134,8 @@
 			return res;
 		},
 
-	    initValidate: function(element) {
-	    	self.clearError(element);
+		initValidate: function(element) {
+			self.clearError(element);
 
 			var res = self.validate(element)
 
@@ -145,16 +143,16 @@
 			if (self.config.afterEach !== null) {
 				var userRes = self.config.afterEach.call(self, res, element);
 				if ('error' in userRes && 'message' in userRes) {
-				 	res.error = userRes.error;
+			 		res.error = userRes.error;
 				}
-			}			
+			}
 
 			if (res.error) {
 				self.outPutError(element, res.message);
 			}
 
 			return res;
-	    },		
+		},
 
 		validate: function(element) {
 			var res    = {
@@ -163,7 +161,7 @@
 			};
 
 			if (typeof element !== 'undefined' && typeof element.data('gavel-rules') !== 'undefined') {
-				var rules = element.data('gavel-rules').split('|');			
+				var rules = element.data('gavel-rules').split('|');
 				$.each(rules, function(index, rule) {
 					// If regex validated field
 					if (rule in self.config.validation && typeof self.config.validation[rule]['regex'] !== 'undefined' &&
@@ -171,7 +169,7 @@
 						if (!element.val().match(self.config.validation[rule]['regex'])) {
 							if(typeof self.config.validation[rule]['message'] !== 'undefined') {
 								res.message = self.config.validation[rule]['message'];
-							}	
+							}
 							res.error = true;
 						}
 					} else {
@@ -186,7 +184,7 @@
 						// Built in functions
 						if (splitRule in self.config.validation && typeof self.config.validation[splitRule]['method'] === 'string') {
 							var funcRes = self[self.config.validation[splitRule]['method']](element, brackets);
-						// User functions	
+						// User functions
 						} else if (splitRule in self.config.validation && typeof self.config.validation[splitRule]['method'] !== 'undefined' &&
 								self.config.validation[splitRule]['method'] !== null) {
 							funcRes = self.config.validation[splitRule]['method'].call(self, element, brackets)
@@ -255,7 +253,7 @@
 			$.each(tags, function(tag, value) {
 				string = string.replace(tag, value);
 			});
-			return string;	
+			return string;
 		},
 
 		clearError: function(element) {
@@ -273,16 +271,16 @@
 				$(element).after('<' + self.config.errorContainer + ' class="' + self.config.errorClass + '">' + error + '</' + self.config.errorContainer + '>');
 			}
 		}
-  	}
+	}
 
-  	Gavel.defaults = Gavel.prototype.defaults;
+	Gavel.defaults = Gavel.prototype.defaults;
 
-  	$.fn.gavel = function(options) {
-    	return this.each(function() {
-      		new Gavel(this, options).init();
-	    });
-  	};
+	$.fn.gavel = function(options) {
+		return this.each(function() {
+			new Gavel(this, options).init();
+		});
+	};
 
-  	window.Gavel = Gavel;
-  	
+	window.Gavel = Gavel;
+
 })(window, jQuery);
