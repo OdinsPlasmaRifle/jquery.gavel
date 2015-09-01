@@ -89,19 +89,60 @@
                 data-gavel-rules="required|email|max[50]"
             -->        
             <label for="example_input1">Required Field</label><br/>
-            <input name="example_input1" type="text" data-gavel="" data-gavel-rules="required"/><br/>
+            <input name="example_input1" type="text" data-gavel data-gavel-rules="required"/><br/>
 
             <label for="example_input2">Match Field</label><br/>
-            <input name="example_input2" type="text" data-gavel="" data-gavel-rules="required|match[example_input1]"/><br/>
+            <input name="example_input2" type="text" data-gavel data-gavel-rules="required|match[example_input1]"/><br/>
 
             <label for="example_input3">Numeric Field</label><br/>
-            <input name="example_input3" type="text" data-gavel="" data-gavel-rules="required|numeric"/><br/>
+            <input name="example_input3" type="text" data-gavel data-gavel-rules="required|numeric"/><br/>
 
             <label for="example_input4">Email with min/max</label><br/>
-            <input name="example_input4" type="text" data-gavel="" data-gavel-rules="email|min[10]|max[15]"/><br/>
+            <input name="example_input4" type="text" data-gavel data-gavel-rules="email|min[10]|max[15]"/><br/>
 
             <label for="example_input5">Custom Field</label><br/>
-            <input name="example_input5" type="text" data-gavel="" data-gavel-rules="custom1"/><br/>
+            <input name="example_input5" type="text" data-gavel data-gavel-rules="custom1"/>
+
+            <br/><br/>
+
+            <!--
+                Radio Buttons:
+
+                Only the 'required' rule works here. A single radio button for a button group must be selected to pass validation
+            -->
+            <label for="radio1">Radio 1</label><br>
+            <input type="radio" name="radio1" value="r1" data-gavel data-gavel-rules="required"><br/>
+            <label for="radio2">Radio 2</label><br>
+            <input type="radio" name="radio1" value="r2" data-gavel data-gavel-rules="required">
+
+            <br/><br/>
+
+            <!--
+                Checkbox:
+
+                Only the 'required' rule works here. Works on a per checkbox basis.
+            -->
+            <label for="checkbox1">Checkbox 1</label><br>
+            <input type="checkbox" name="checkbox1" value="c1" data-gavel data-gavel-rules="required"><br>
+            <label for="checkbox2">Checkbox 2</label><br>
+            <input type="checkbox" name="checkbox1" value="c2" data-gavel data-gavel-rules="required">
+
+            <br><br/>
+
+            <!--
+                Select Box:
+
+                All validation rules will work here, but it makes no sense to use anything but 'required'.
+            -->
+            <select name="select1" data-gavel data-gavel-rules="required">
+                <option value="">Select...</option>
+                <option value="s1">Option 1</option>
+                <option value="s2">Option 2</option>
+                <option value="s3">Option 3</option>
+                <option value="s4">Option 4</option>
+            </select>
+
+            <br/><br/>
 
             <input value="Submit" id="submit" type="submit"/>
         </form>

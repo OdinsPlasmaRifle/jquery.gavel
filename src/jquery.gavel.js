@@ -36,15 +36,10 @@
 			afterAll       : null,		   // Function called once the form has been validated
 			initiated      : false,		   // Indicates whether the plugin has been initiated yet
 			validation     : {			   // Validation types
-				required : {
-					message : "This is a required field", // Error message
-					regex   : /\S+/, 					  // Regex validation
-					method  : null						  // method to call - custom or plugin specific
-				},
 				alphanumeric : {
-					message : "Only alphanumeric characters are permitted",
-					regex   : /^$|^(?=.*[A-Z0-9])[\w.,!"'-\/$ ]+$/i,
-					method  : null
+					message : "Only alphanumeric characters are permitted",		// Error message
+					regex   : /^$|^(?=.*[A-Z0-9])[\w.,!"'-\/$ ]+$/i,			// Regex validation
+					method  : null												// method to call - custom or plugin specific
 				},
 				numeric : {
 					message : "Only numeric characters are permitted",
@@ -66,24 +61,29 @@
 					regex   : /^$|^[\(]?[0-9]{3}[\ \-\)]{0,2}[0-9]{3}[\ \-]?[0-9]{4}$/,
 					method  : null
 				},
+				required : {
+					message : "This is a required field",
+					regex   : null,
+					method  : 'validateRequired'// Built in custom function
+				},				
 				match : {
 					message : "The fields must match",
 					regex   : null,
-					method  : 'validateMatch' // Built in custom function
+					method  : 'validateMatch'	// Built in custom function
 				},
 				min : {
 					message : "The min characters permitted is {min}",
 					regex   : null,
-					method  : 'validateMin'  // Built in custom function
+					method  : 'validateMin'		// Built in custom function
 				},
 				max : {
 					message : "The max characters permitted is {max}",
 					regex   : null,
-					method  : 'validateMax'  // Built in custom function
+					method  : 'validateMax'		// Built in custom function
 				}
 			},
-			inputEvents    : ['keyup', 'change', 'blur'], // Input events 
-			formEvents     : ['submit'] 				  // Form events
+			inputEvents    : ['keyup', 'change'],	// Input events 
+			formEvents     : ['submit']				// Form events
 		},
 
 		init: function() {
@@ -96,17 +96,17 @@
 			// Attach event(s) to each gavel element
 			$.each(self.config.inputEvents, function(index, inputEvent) {
 				$(self.element).on(inputEvent, '*[data-gavel]', function(e) {
-						self.initValidate($(this));
+					self.initValidate($(this));
 				});
 			});
 
 			// Attach event(s) to the gavel form
 			$.each(self.config.formEvents, function(index, formEvent) {
 				$(self.element).on(formEvent, function(e) {
-						var res = self.initFormValidate($(this));
-						if (res.error) {
-							e.preventDefault();
-						}
+					var res = self.initFormValidate($(this));
+					if (res.error) {
+						e.preventDefault();
+					}
 				});
 			});
 
@@ -219,6 +219,24 @@
 			return res;
 		},
 
+		// Built in field required validation
+		validateRequired: function(element, extra) {
+			var res 	= true;
+			var type	= element.attr('type');
+			var name	= element.attr('name');
+			var value	= element.val();
+			if(typeof name !== "undefined") {
+				if (type === "radio" && !$('input[name="' + name + '"]').is(":checked")) {
+					res = false;
+				} else if (type === "checkbox" && !element.is(":checked")) {
+					res = false;
+				} else if (!value.match(/\S+/)) {
+					res = false;
+				}
+			}
+			return res;
+		},
+
 		// Built in field match validation
 		validateMatch: function(element, match) {
 			var res = true;
@@ -270,10 +288,18 @@
 		},
 
 		clearError: function(element) {
+			var type	= element.attr('type');
+			var name	= element.attr('name');
 			$(element).attr('data-gavel', 'true');
 			$(element).removeClass(self.config.errorClass);
-			if (self.config.errorText) {
-				$(element).next(self.config.errorContainer + '.' + self.config.errorClass).remove();
+			if (type === 'radio' && $('input[name="' + name + '"]').is(":checked")) {
+				$('input[name="' + name + '"]').each(function(i, obj){
+					$(obj).next(self.config.errorContainer + '.' + self.config.errorClass).remove();
+				});
+			} else {
+				if (self.config.errorText) {
+					$(element).next(self.config.errorContainer + '.' + self.config.errorClass).remove();
+				}
 			}
 		},
 
