@@ -29,17 +29,27 @@
 	Gavel.prototype = {
 
 		defaults: {
-			errorText      : true,			// Indicates whether a text error should be outputted
-			errorContainer : 'span', 		// The HTML element used to output text errors
-			errorClass     : 'gavelError',	// Class used for the errorContainer
-			afterEach      : null,			// Function called after each input is validated
-			afterAll       : null,			// Function called once the form has been validated
-			initiated      : false,			// Indicates whether the plugin has been initiated yet
-			validation     : {				// Validation types
+			// Indicates whether a text error should be outputted
+			errorText      : true,
+			// The HTML element used to output text errors
+			errorContainer : 'span',
+			// Class used for the errorContainer
+			errorClass     : 'gavelError',
+			// Function called after each input is validated
+			afterEach      : null,
+			// Function called once the form has been validated
+			afterAll       : null,
+			// Indicates whether the plugin has been initiated yet
+			initiated      : false,
+			// Validation types
+			validation     : {
 				alphanumeric : {
-					message : "Only alphanumeric characters are permitted",	// Error message
-					regex   : /^$|^(?=.*[A-Z0-9])[\w.,!"'-\/$ ]+$/i,	// Regex validation
-					method  : null	// method to call - custom or plugin specific
+					// Error message
+					message : "Only alphanumeric characters are permitted",
+					// Regex validation
+					regex   : /^$|^(?=.*[A-Z0-9])[\w.,!"'-\/$ ]+$/i,
+					// Method to call - custom or plugin specific
+					method  : null
 				},
 				numeric : {
 					message : "Only numeric characters are permitted",
@@ -64,26 +74,27 @@
 				required : {
 					message : "This is a required field",
 					regex   : null,
-					method  : 'validateRequired'	// Built in custom function
+					// Built in custom function
+					method  : 'validateRequired'
 				},				
 				match : {
 					message : "The fields must match",
 					regex   : null,
-					method  : 'validateMatch'	// Built in custom function
+					method  : 'validateMatch'
 				},
 				min : {
 					message : "The min characters permitted is {min}",
 					regex   : null,
-					method  : 'validateMin'	// Built in custom function
+					method  : 'validateMin'
 				},
 				max : {
 					message : "The max characters permitted is {max}",
 					regex   : null,
-					method  : 'validateMax'	// Built in custom function
+					method  : 'validateMax'
 				}
 			},
-			inputEvents    : ['keyup', 'change'], // Input events 
-			formEvents     : ['submit']	// Form events
+			inputEvents    : ['keyup', 'change'],
+			formEvents     : ['submit']
 		},
 
 		init: function() {
