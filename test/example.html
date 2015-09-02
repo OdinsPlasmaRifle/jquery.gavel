@@ -111,9 +111,10 @@
                 Only the 'required' rule works here. A single radio button for a button group must be selected to pass validation
             -->
             <label for="radio1">Radio 1</label><br>
-            <input type="radio" name="radio1" value="r1" data-gavel data-gavel-rules="required"><br/>
+            <input type="radio" name="radio1" value="r1" data-gavel data-gavel-rules="required" data-gavel-errorcont=".errorContainer"><br/>
             <label for="radio2">Radio 2</label><br>
-            <input type="radio" name="radio1" value="r2" data-gavel data-gavel-rules="required">
+            <input type="radio" name="radio1" value="r2" data-gavel data-gavel-rules="required" data-gavel-errorcont=".errorContainer"><br/>
+            <div class="errorContainer"></div>
 
             <br/><br/>
 
@@ -123,9 +124,11 @@
                 Only the 'required' rule works here. Works on a per checkbox basis.
             -->
             <label for="checkbox1">Checkbox 1</label><br>
-            <input type="checkbox" name="checkbox1" value="c1" data-gavel data-gavel-rules="required"><br>
+            <input type="checkbox" name="checkbox1" value="c1" data-gavel data-gavel-rules="required" data-gavel-errorcont=".errorContainer2"><br>
+            <div class="errorContainer2"></div><br/>
             <label for="checkbox2">Checkbox 2</label><br>
-            <input type="checkbox" name="checkbox1" value="c2" data-gavel data-gavel-rules="required">
+            <input type="checkbox" name="checkbox1" value="c2" data-gavel data-gavel-rules="required" data-gavel-errorcont=".errorContainer3">
+            <div class="errorContainer3"></div>
 
             <br><br/>
 

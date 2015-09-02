@@ -8,7 +8,7 @@
  *
  * jQuery Gavel Plugin
  * version: 1.0.0
- * Requires jQuery v1.8 or later (arbitrary, no testing has been done)
+ * Requires jQuery v1.7 or later
  * Copyright (c) 2015 Joshua van Besouw
  * Project repository: https://github.com/odinsplasmarifle/jquery.gavel
  * MIT License
@@ -29,17 +29,17 @@
 	Gavel.prototype = {
 
 		defaults: {
-			errorText      : true,		   // Indicates whether a text error should be outputted
-			errorContainer : 'span', 	   // The HTML element used to output text errors
-			errorClass     : 'gavelError', // Class used for the errorContainer
-			afterEach      : null,		   // Function called after each input is validated
-			afterAll       : null,		   // Function called once the form has been validated
-			initiated      : false,		   // Indicates whether the plugin has been initiated yet
-			validation     : {			   // Validation types
+			errorText      : true,			// Indicates whether a text error should be outputted
+			errorContainer : 'span', 		// The HTML element used to output text errors
+			errorClass     : 'gavelError',	// Class used for the errorContainer
+			afterEach      : null,			// Function called after each input is validated
+			afterAll       : null,			// Function called once the form has been validated
+			initiated      : false,			// Indicates whether the plugin has been initiated yet
+			validation     : {				// Validation types
 				alphanumeric : {
-					message : "Only alphanumeric characters are permitted",		// Error message
-					regex   : /^$|^(?=.*[A-Z0-9])[\w.,!"'-\/$ ]+$/i,			// Regex validation
-					method  : null												// method to call - custom or plugin specific
+					message : "Only alphanumeric characters are permitted",	// Error message
+					regex   : /^$|^(?=.*[A-Z0-9])[\w.,!"'-\/$ ]+$/i,	// Regex validation
+					method  : null	// method to call - custom or plugin specific
 				},
 				numeric : {
 					message : "Only numeric characters are permitted",
@@ -64,7 +64,7 @@
 				required : {
 					message : "This is a required field",
 					regex   : null,
-					method  : 'validateRequired'// Built in custom function
+					method  : 'validateRequired'	// Built in custom function
 				},				
 				match : {
 					message : "The fields must match",
@@ -74,16 +74,16 @@
 				min : {
 					message : "The min characters permitted is {min}",
 					regex   : null,
-					method  : 'validateMin'		// Built in custom function
+					method  : 'validateMin'	// Built in custom function
 				},
 				max : {
 					message : "The max characters permitted is {max}",
 					regex   : null,
-					method  : 'validateMax'		// Built in custom function
+					method  : 'validateMax'	// Built in custom function
 				}
 			},
-			inputEvents    : ['keyup', 'change'],	// Input events 
-			formEvents     : ['submit']				// Form events
+			inputEvents    : ['keyup', 'change'], // Input events 
+			formEvents     : ['submit']	// Form events
 		},
 
 		init: function() {
@@ -99,7 +99,6 @@
 					self.initValidate($(this));
 				});
 			});
-
 			// Attach event(s) to the gavel form
 			$.each(self.config.formEvents, function(index, formEvent) {
 				$(self.element).on(formEvent, function(e) {
@@ -109,7 +108,6 @@
 					}
 				});
 			});
-
 			self.config.initiated = true;
 		},
 
@@ -118,15 +116,13 @@
 				error   : false,
 				message : ''
 			};
-
 			// Run validate on each gavel form element
-			$(form).find('*[data-gavel]').each(function() {
+			form.find('*[data-gavel]').each(function() {
 				var tempRes = self.initValidate($(this));
 				if (!res.error) {
 					res.error = tempRes.error;
 				}
 			});
-
 			// Trigger user afterAll function
 			if(self.config.afterAll !== null) {
 				var userRes = self.config.afterAll.call(self, res, form);
@@ -134,17 +130,16 @@
 				 	res.error = userRes.error;
 				}
 			}
-
 			return res;
 		},
 
 		initValidate: function(element) {
+			// Add uid to the element
+			element.attr('data-gavel-uid', self.getUid(element));
 			// Clear element's current errors
 			self.clearError(element);
-
 			// Validate the element
 			var res = self.validate(element)
-
 			// Trigger user afterEach function
 			if (self.config.afterEach !== null) {
 				var userRes = self.config.afterEach.call(self, res, element);
@@ -152,13 +147,31 @@
 			 		res.error = userRes.error;
 				}
 			}
-
 			// Outpust an error if one exists
 			if (res.error) {
 				self.outPutError(element, res.message);
 			}
-
 			return res;
+		},
+
+		// Get an elements UID or generate one if required
+		getUid: function(element) {
+			var uid = element.attr('data-gavel-uid');
+			if (typeof uid !== 'undefined' && uid !== '') {
+				uid = element.attr('data-gavel-uid');
+			} else {
+				uid = self.generateUid();
+			}
+			return uid;
+		},
+
+		// Generate a unique ID for an element
+		generateUid: function(element) {
+			var uid = '';
+			while (uid === '' || $('*[data-gavel][data-gavel-uid="' + uid + '"]').length > 1) {
+				uid = Math.random().toString(16).slice(2);
+			}
+			return uid;
 		},
 
 		validate: function(element) {
@@ -188,11 +201,9 @@
 						// Split off brackets if they exist
 						var split = rule.split('[');
 						var splitRule = split[0];
-
 						// Get value between brackets
 						var brackets = rule.match(/^[a-zA-Z0-9 .-\_]+\[([^)]+)\]$/);
 						brackets = (brackets && typeof brackets[1] !== 'undefined') ?  brackets[1] : '';
-
 						// Built in functions
 						if (splitRule in self.config.validation && typeof self.config.validation[splitRule]['method'] === 'string') {
 							var funcRes = self[self.config.validation[splitRule]['method']](element, brackets);
@@ -219,12 +230,12 @@
 			return res;
 		},
 
-		// Built in field required validation
+		// Built in required validation
 		validateRequired: function(element, extra) {
-			var res 	= true;
-			var type	= element.attr('type');
-			var name	= element.attr('name');
-			var value	= element.val();
+			var res = true;
+			var type = element.attr('type');
+			var name = element.attr('name');
+			var value = element.val();
 			if(typeof name !== "undefined") {
 				if (type === "radio" && !$('input[name="' + name + '"]').is(":checked")) {
 					res = false;
@@ -237,7 +248,7 @@
 			return res;
 		},
 
-		// Built in field match validation
+		// Built in match validation
 		validateMatch: function(element, match) {
 			var res = true;
 			if(match) {
@@ -250,7 +261,7 @@
 			return res;
 		},
 
-		// Built in field min validation
+		// Built in min validation
 		validateMin: function(element, min) {
 			var res = true;
 			min = self.addSlashes(min);
@@ -262,7 +273,7 @@
 			return res;
 		},
 
-		// Built in field max validation
+		// Built in max validation
 		validateMax: function(element, max) {
 			var res = true;
 			max = self.addSlashes(max);
@@ -287,27 +298,44 @@
 			return string;
 		},
 
+		// Remove error messages associated with a UID or name
 		clearError: function(element) {
-			var type	= element.attr('type');
-			var name	= element.attr('name');
-			$(element).attr('data-gavel', 'true');
-			$(element).removeClass(self.config.errorClass);
-			if (type === 'radio' && $('input[name="' + name + '"]').is(":checked")) {
-				$('input[name="' + name + '"]').each(function(i, obj){
-					$(obj).next(self.config.errorContainer + '.' + self.config.errorClass).remove();
-				});
-			} else {
-				if (self.config.errorText) {
-					$(element).next(self.config.errorContainer + '.' + self.config.errorClass).remove();
-				}
+			var type = element.attr('type');
+			var name = element.attr('name');
+			var uid = self.getUid(element);
+			element.attr('data-gavel', 'true');
+			element.removeClass(self.config.errorClass);
+			if (self.config.errorText) {
+				if (type === 'radio') {
+					$('.' + self.config.errorClass + '[data-gavel-error-name="' + name + '"]').remove();
+				} else {
+					$('.' + self.config.errorClass + '[data-gavel-error-uid="' + uid + '"]').remove();
+				}			
 			}
 		},
 
+		// Output an error message to the page
 		outPutError: function(element, error) {
-			$(element).attr('data-gavel', 'false');
-			$(element).addClass(self.config.errorClass);
+			var type = element.attr('type');
+			var name = element.attr('name');
+			var uid = self.getUid(element);
+			var container = $(element.data('gavel-errorcont'));
+			// Create container element using user settings
+			var errorElement = '<' + self.config.errorContainer + 
+								' class="' + self.config.errorClass +
+								'" data-gavel-error-uid="' + uid + 
+								'" data-gavel-error-name="' + name + '">' + 
+								error + '</' + self.config.errorContainer + '>';
+			element.attr('data-gavel', 'false');
+			element.addClass(self.config.errorClass);
 			if (self.config.errorText) {
-				$(element).after('<' + self.config.errorContainer + ' class="' + self.config.errorClass + '">' + error + '</' + self.config.errorContainer + '>');
+				// If a container is specified append the error
+				if (container.length > 0) {
+					container.append(errorElement);
+				// Otherwise place after the element	
+				} else {
+					element.after(errorElement);
+				}
 			}
 		}
 	}
