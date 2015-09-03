@@ -87,9 +87,13 @@
                 data-gavel-rules should be pipe separated and if an any additional data needs to be passed wth the rule, enclose the extra data between square brackets:
 
                 data-gavel-rules="required|email|max[50]"
+
+                An additional rule can be passed in order to indicate a specific error container:
+
+                data-gavel-errorcont=".errorContainer"
             -->        
             <label for="example_input1">Required Field</label><br/>
-            <input name="example_input1" type="text" data-gavel data-gavel-rules="required"/><br/>
+            <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic"/><br/>
 
             <label for="example_input2">Match Field</label><br/>
             <input name="example_input2" type="text" data-gavel data-gavel-rules="required|match[example_input1]"/><br/>
@@ -101,7 +105,13 @@
             <input name="example_input4" type="text" data-gavel data-gavel-rules="email|min[10]|max[15]"/><br/>
 
             <label for="example_input5">Custom Field</label><br/>
-            <input name="example_input5" type="text" data-gavel data-gavel-rules="custom1"/>
+            <input name="example_input5" type="text" data-gavel data-gavel-rules="custom1|alphanumeric"/><br/>
+
+            <label for="example_input6">Date field</label><br/>
+            <input name="example_input6" type="text" data-gavel data-gavel-rules="date"/><br/>
+
+            <label for="example_input7">Telephone Field</label><br/>
+            <input name="example_input7" type="text" data-gavel data-gavel-rules="telephone"/>
 
             <br/><br/>
 

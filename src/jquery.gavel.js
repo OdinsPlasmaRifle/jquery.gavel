@@ -67,9 +67,14 @@
 					method  : null
 				},
 				telephone : {
-					message : "Only valid telephone numbers are permitted",
-					regex   : /^$|^[\(]?[0-9]{3}[\ \-\)]{0,2}[0-9]{3}[\ \-]?[0-9]{4}$/,
+					message : "Only valid telephone numbers are permitted (eg. +27 00 000 0000)",
+					regex   : /\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\W*\d\W*\d\W*\d\W*\d\W*\d\W*\d\W*\d\W*\d\W*(\d{1,2})$/,
 					method  : null
+				},
+				date : {
+					message : "Only valid dates are permitted (eg. dd-mm-yyyy)",
+					regex	: /^(?:(?:(?:0?[13578]|1[02])(\/|-|\.)31)\1|(?:(?:0?[1,3-9]|1[0-2])(\/|-|\.)(?:29|30)\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:0?2(\/|-|\.)29\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:(?:0?[1-9])|(?:1[0-2]))(\/|-|\.)(?:0?[1-9]|1\d|2[0-8])\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,
+					Method	: null
 				},
 				required : {
 					message : "This is a required field",
@@ -93,7 +98,7 @@
 					method  : 'validateMax'
 				}
 			},
-			inputEvents    : ['keyup', 'change'],
+			inputEvents    : ['keyup', 'change', 'blur'],
 			formEvents     : ['submit']
 		},
 
@@ -186,7 +191,8 @@
 		},
 
 		validate: function(element) {
-			var res    = {
+			// Error response object
+			var res = {
 				error   : false,
 				message : ''
 			};
@@ -215,25 +221,27 @@
 						// Get value between brackets
 						var brackets = rule.match(/^[a-zA-Z0-9 .-\_]+\[([^)]+)\]$/);
 						brackets = (brackets && typeof brackets[1] !== 'undefined') ?  brackets[1] : '';
-						// Built in functions
-						if (splitRule in self.config.validation && typeof self.config.validation[splitRule]['method'] === 'string') {
-							var funcRes = self[self.config.validation[splitRule]['method']](element, brackets);
-						// User functions
-						} else if (splitRule in self.config.validation && typeof self.config.validation[splitRule]['method'] !== 'undefined' &&
-								self.config.validation[splitRule]['method'] !== null) {
-							funcRes = self.config.validation[splitRule]['method'].call(self, element, brackets)
-						}
-						// Create error message
-						if (!funcRes || (typeof funcRes === 'object' && 'error' in funcRes && funcRes.error)) {
-							if(typeof self.config.validation[splitRule]['message'] !== 'undefined') {
-								// Do tag replacement on message if tags exist
-								if(typeof funcRes === 'object'  && 'tags' in funcRes && typeof funcRes.tags === 'object') {
-									res.message = self.replaceCustomTags(funcRes.tags, self.config.validation[splitRule]['message']);
-								} else {
-									res.message = self.config.validation[splitRule]['message'];
-								}
+						if (splitRule in self.config.validation) {
+							// Built in functions
+							if (typeof self.config.validation[splitRule]['method'] === 'string') {
+								funcRes = self[self.config.validation[splitRule]['method']](element, brackets);
+							// User functions
+							} else if (splitRule in self.config.validation && typeof self.config.validation[splitRule]['method'] !== 'undefined' &&
+									self.config.validation[splitRule]['method'] !== null) {
+								funcRes = self.config.validation[splitRule]['method'].call(self, element, brackets)
 							}
-							res.error = true;
+							// Create error message
+							if (!funcRes || (typeof funcRes === 'object' && 'error' in funcRes && funcRes.error)) {
+								if(typeof self.config.validation[splitRule]['message'] !== 'undefined') {
+									// Do tag replacement on message if tags exist
+									if(typeof funcRes === 'object'  && 'tags' in funcRes && typeof funcRes.tags === 'object') {
+										res.message = self.replaceCustomTags(funcRes.tags, self.config.validation[splitRule]['message']);
+									} else {
+										res.message = self.config.validation[splitRule]['message'];
+									}
+								}
+								res.error = true;
+							}
 						}
 					}
 				});
