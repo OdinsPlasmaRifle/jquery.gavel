@@ -6,15 +6,19 @@ Easily extendable jQuery validation plugin. This plugin acts as a highly customi
 
 To add Gavel to a project, inlcude the jquery library as well as jquery.gavel in the head of your HTML:
 
-    <script type="text/javascript" src="jquery.min.js"></script>
-    <script type="text/javascript" src="jquery.gavel.js"></script>
+```html
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.gavel.js"></script>
+```
 
 Now, add a form to your HTML:
 
-    <form method="GET" name="example" id="form_id">
-        <input name="example_input1" type="text"/>
-        <input value="Submit" id="submit" type="submit"/>
-    </form>
+```html
+<form method="GET" name="example" id="form_id">
+    <input name="example_input1" type="text"/>
+    <input value="Submit" id="submit" type="submit"/>
+</form>
+```
 
 In order to include form inputs into the Gavel validation, add 'data-gavel' to the inputs:
 
