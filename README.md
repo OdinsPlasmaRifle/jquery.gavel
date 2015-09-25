@@ -87,7 +87,7 @@ match | The fields must match | data-gavel-rules="match[name_of_element_to_match
 min | The min characters permitted is {min} | data-gavel-rules="min[10]"
 max | The max characters permitted is {max} | data-gavel-rules="max[15]"
 
-You can overide the above functions. To do this, alter the instantiation of Gavel:
+You can overide the above rules. To do this, alter the instantiation of Gavel:
 
 ```javascript
 $("#example").gavel({
@@ -99,7 +99,7 @@ $("#example").gavel({
 });
 ```
 
-You can alter any of the values of the validation rules (message, method, regex). To see more details regarding regex and methods take a look at the Gavel source.
+You can alter any of the values of the validation rules (message, method, regex). To see more details regarding regex, methods and what else can be changed take a look at the Gavel source.
 
 Alternatively, you can add additional rules like this:
 
@@ -122,7 +122,7 @@ $("#example").gavel({
 
 ###Custom Function Formats
 
-Gavel allows you to use custom functions when declaring afterEach, afterAll and custom validation rules. There are certain guidelines you shoudl follow when crating these functions:
+Gavel allows you to use custom functions when declaring afterEach, afterAll and custom validation rules. There are certain guidelines you should follow when creating these functions:
 
 **afterEach:**
 
@@ -209,13 +209,17 @@ data-gavel-rules="custom1"
 
 ###Messages
 
-Gavel has a tag replacement system that can be used to easily implement messages with parts that change based on a variable. This tag replacement system will work when a custom function is used or when one of the built in functions use it.
+Gavel has a tag replacement system that can be used to easily implement messages with parts that change based on a variable. This tag replacement system will work when a custom function is used or when certain built in functions are used.
 
 **Builit In:**
 
-min: Any string of "{min}" included in the message will be replaced by the min amount indicated on the rule
+*min:* 
 
-max: Any string of "{max}" included in the message will be replaced by the max amount indicated on the rule
+Any string of "{min}" included in the message will be replaced by the min amount indicated on the rule
+
+*max:* 
+
+Any string of "{max}" included in the message will be replaced by the max amount indicated on the rule
 
 **Custom**
 
@@ -225,7 +229,7 @@ Add an additional value in the 'valid' object returned by the custom function:
 function custom1Function(element, extra) {
     return {error: true, tags: {'{tag1}': 'Replaced Tag'}};
 }
-```javascript
+```
 
 The above custom function will replace '{tag1}' (if found in the rule's message) with 'Replaced Tag'. 
 
