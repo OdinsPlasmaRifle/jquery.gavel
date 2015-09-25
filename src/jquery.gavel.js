@@ -7,7 +7,7 @@
  *
  *
  * jQuery Gavel Plugin
- * version: 1.0.0
+ * version: 1.1.0
  * Requires jQuery v1.7 or later
  * Copyright (c) 2015 Joshua van Besouw
  * Project repository: https://github.com/odinsplasmarifle/jquery.gavel
