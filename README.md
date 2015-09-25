@@ -4,14 +4,14 @@ Easily extendable jQuery validation plugin. This plugin acts as a highly customi
 
 ##Usage
 
-To add Gavel to a project, inlcude the jquery library as well as jquery.gavel in the head of your HTML:
+To add Gavel to a project, inlcude the jquery library as well as jquery.gavel in the ```<head>``` of your HTML:
 
 ```html
 <script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript" src="jquery.gavel.js"></script>
 ```
 
-Now, add a form to your HTML:
+Now, add a form to your ```<body>```:
 
 ```html
 <form method="GET" name="example" id="form_id">
@@ -22,30 +22,38 @@ Now, add a form to your HTML:
 
 In order to include form inputs into the Gavel validation, add 'data-gavel' to the inputs:
 
-    <form method="GET" name="example" id="form_id">
-        <input name="example_input1" type="text" data-gavel/>
-        <input value="Submit" id="submit" type="submit"/>
-    </form>
+```html
+<form method="GET" name="example" id="form_id">
+    <input name="example_input1" type="text" data-gavel/>
+    <input value="Submit" id="submit" type="submit"/>
+</form>
+```
 
 You will now want to add a list of rules the input should validate against:
 
-    <form method="GET" name="example" id="form_id">
-        <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic"/>
-        <input value="Submit" id="submit" type="submit"/>
-    </form>       
+```html
+<form method="GET" name="example" id="form_id">
+    <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic"/>
+    <input value="Submit" id="submit" type="submit"/>
+</form>
+```
 
 Finally, to initiate Gavel on the form add the following line to your JavaScript:
 
-    $("#example").gavel();
+```javascript
+$("#example").gavel();
+```
 
 This will initiate Gavel on '#example' in the simplest manner possible. Meaning you will get all the default configuration settings without any additional validation rules or messages.
 
 To specifiy a different container for errors, add 'data-gavel-errorcont' like this:
 
-    <form method="GET" name="example" id="form_id">
-        <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic" data-gavel-errorcont=".errorContainer3"/>
-        <input value="Submit" id="submit" type="submit"/>
-    </form>
+```html
+<form method="GET" name="example" id="form_id">
+    <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic" data-gavel-errorcont=".errorContainer3"/>
+    <input value="Submit" id="submit" type="submit"/>
+</form>
+```
 
 This can be useful when dealing with radio and checbox inputs.
 
@@ -80,32 +88,36 @@ max | The max characters permitted is {max} | data-gavel-rules="max[15]"
 
 You can overide the above functions. To do this, alter the instantiation of Gavel:
 
-    $("#example").gavel({
-        validation : {
-            required : { //This is how you overide the message of a rule
-                message : "You must insert a value for this field"
-            }                      
+```javascript
+$("#example").gavel({
+    validation : {
+        required : { //This is how you overide the message of a rule
+            message : "You must insert a value for this field"
         }
-    });
+    }
+});
+```
 
 You can alter any of the values of the validation rules (message, method, regex). To see more details regarding regex and methods take a look at the Gavel source.
 
 Alternatively, you can add additional rules like this:
 
-    $("#example").gavel({
-        validation : { 
-            custom1 : { // This is how you add a custom validation rule that calls a function
-                message : 'Must equal 123 - the following is a tag replaced value: {tag1}!',
-                regex   : null,
-                method  : custom1Function
-            },
-            custom2 : { // This is how you add a custom validation rule that uses regex
-                message : 'Required - the following is a tag replaced value!', // Tag replacement is not available for regex validation
-                regex   : /\S+/,
-                method  : null
-            }                        
+```javascript
+$("#example").gavel({
+    validation : { 
+        custom1 : { // This is how you add a custom validation rule that calls a function
+            message : 'Must equal 123 - the following is a tag replaced value: {tag1}!',
+            regex   : null,
+            method  : custom1Function
+        },
+        custom2 : { // This is how you add a custom validation rule that uses regex
+            message : 'Required - the following is a tag replaced value!', // Tag replacement is not available for regex validation
+            regex   : /\S+/,
+            method  : null
         }
-    });
+    }
+});
+```
 
 ###Custom Function Formats
 
@@ -115,70 +127,84 @@ Gavel allows you to use custom functions when declaring afterEach, afterAll and 
 
 Instantiation:
 
-    $("#example").gavel({             
-        afterEach : testEachFunction
-    }); 
+```javascript
+$("#example").gavel({
+    afterEach : testEachFunction
+}); 
+```
 
 Function: 
 
-    function testEachFunction(valid, element) {
-        // To overide an elements validity change the 'valid' object like this:
-        //
-        // valid.error = true;
-        // valid.message = 'Form Test error';          
-        return valid;
-    }
+```javascript
+function testEachFunction(valid, element) {
+    // To overide an elements validity change the 'valid' object like this:
+    //
+    // valid.error = true;
+    // valid.message = 'Form Test error';
+    return valid;
+}
+```
 
 **afterAll:**
 
 Instantiation:
 
-    $("#example").gavel({             
-        afterAll : testAllFunction
-    }); 
+```javascript
+$("#example").gavel({
+    afterAll : testAllFunction
+});
+```
 
 Function:
 
-    function testAllFunction(valid, form) {
-        // To overide an elements validity change the 'valid' object like this:
-        //
-        // valid.error = true;
-        // valid.message = 'Form Test error';  
-        return valid;
-    }
+```javascript
+function testAllFunction(valid, form) {
+    // To overide an elements validity change the 'valid' object like this:
+    //
+    // valid.error = true;
+    // valid.message = 'Form Test error';
+    return valid;
+}
+```
 
 **validation:**
 
 Instantiation:
 
-    $("#example").gavel({
-        validation : { 
-            custom1 : { // This is how you add a custom validation rule that calls a function
-                message : 'Must equal 123 - the following is a tag replaced value: {tag1}!',
-                regex   : null,
-                method  : custom1Function
-            }                      
+```javascript
+$("#example").gavel({
+    validation : { 
+        custom1 : { // This is how you add a custom validation rule that calls a function
+            message : 'Must equal 123 - the following is a tag replaced value: {tag1}!',
+            regex   : null,
+            method  : custom1Function
         }
-    });
+    }
+});
+```
 
 Function:
 
-    function custom1Function(element, extra) {
-        // Return a boolean of false or true to indicate validity like:
-        //
-        // return false // Indicates something isn't valid (return true to indicate validity)
-        //
-        // Or return an object containing tags that can be used to replace message placeholders, like:
-        //
-        // return {error: true, tags: {'tag1': 'value1'}}
-        //
-        // The 'extra' field will contain any bracket enclosed values in a rule, for instance ruleName[extraValues]        
-        return valid;
-    }
+```javascript
+function custom1Function(element, extra) {
+    // Return a boolean of false or true to indicate validity like:
+    //
+    // return false // Indicates something isn't valid (return true to indicate validity)
+    //
+    // Or return an object containing tags that can be used to replace message placeholders, like:
+    //
+    // return {error: true, tags: {'tag1': 'value1'}}
+    //
+    // The 'extra' field will contain any bracket enclosed values in a rule, for instance ruleName[extraValues]
+    return valid;
+}
+```
 
 Usage: 
 
-    data-gavel-rules="custom1"   
+```html
+data-gavel-rules="custom1"
+```
 
 ###Messages
 
@@ -194,9 +220,11 @@ max: Any string of "{max}" included in the message will be replaced by the max a
 
 Add an additional value in the 'valid' object returned by the custom function:
 
-    function custom1Function(element, extra) {      
-        return {error: true, tags: {'{tag1}': 'Replaced Tag'}};
-    }
+```javascript
+function custom1Function(element, extra) {
+    return {error: true, tags: {'{tag1}': 'Replaced Tag'}};
+}
+```javascript
 
 The above custom function will replace '{tag1}' (if found in the rule's message) with 'Replaced Tag'. 
 
