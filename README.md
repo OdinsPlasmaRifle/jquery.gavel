@@ -14,7 +14,7 @@ To add Gavel to a project, inlcude the jquery library as well as jquery.gavel in
 Now, add a form to your ```<body>```:
 
 ```html
-<form method="GET" name="example" id="form_id">
+<form method="GET" name="example" id="example">
     <input name="example_input1" type="text"/>
     <input value="Submit" id="submit" type="submit"/>
 </form>
@@ -23,7 +23,7 @@ Now, add a form to your ```<body>```:
 In order to include form inputs into the Gavel validation, add 'data-gavel' to the inputs:
 
 ```html
-<form method="GET" name="example" id="form_id">
+<form method="GET" name="example" id="example">
     <input name="example_input1" type="text" data-gavel/>
     <input value="Submit" id="submit" type="submit"/>
 </form>
@@ -32,7 +32,7 @@ In order to include form inputs into the Gavel validation, add 'data-gavel' to t
 You will now want to add a list of rules the input should validate against:
 
 ```html
-<form method="GET" name="example" id="form_id">
+<form method="GET" name="example" id="example">
     <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic"/>
     <input value="Submit" id="submit" type="submit"/>
 </form>
@@ -49,7 +49,7 @@ This will initiate Gavel on '#example' in the simplest manner possible. Meaning 
 To specifiy a different container for errors, add 'data-gavel-errorcont' like this:
 
 ```html
-<form method="GET" name="example" id="form_id">
+<form method="GET" name="example" id="example">
     <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic" data-gavel-errorcont=".errorContainer3"/>
     <input value="Submit" id="submit" type="submit"/>
 </form>
