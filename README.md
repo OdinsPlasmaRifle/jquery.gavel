@@ -1,6 +1,6 @@
 # jquery.gavel
 
-Easily extendable jQuery validation plugin. This plugin acts as a easily customizable framework for validation rather than a "fully-featured" validation engine. It provides basic validation for most situations but its strength lies in how easy it is to add additional features.
+Easily extendable jQuery validation plugin. This plugin acts as a highly customizable framework for validation rather than a "fully-featured" validation engine. It provides basic validation for most situations but its strength lies in how easy it is to add additional features.
 
 ##Usage
 
