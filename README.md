@@ -50,7 +50,8 @@ To specifiy a different container for errors, add 'data-gavel-errorcont' like th
 
 ```html
 <form method="GET" name="example" id="example">
-    <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic" data-gavel-errorcont=".errorContainer3"/>
+    <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic" data-gavel-errorcont=".errorContainer1"/>
+    <div class="errorContainer1"></div>
     <input value="Submit" id="submit" type="submit"/>
 </form>
 ```
