@@ -1,0 +1,23 @@
+{
+    "name": "jquery.gavel",
+    "main": ["dist/jquery.gavel.min.js"],
+    "version": "1.1.0",
+    "homepage": "https://github.com/odinsplasmarifle/jquery.gavel",
+    "authors": [
+        "Joshua van Besouw"
+    ],
+    "description": "Easily extendable jQuery validation plugin",
+    "keywords": [
+        "validation",
+        "extendable",
+        "lightweight"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "test"
+    ],
+    "dependencies": {
+        "jquery": ">=1.7"
+    }
+}

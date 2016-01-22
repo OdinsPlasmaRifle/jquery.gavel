@@ -240,6 +240,4 @@ For example plugin usage take a look at the 'example.html' file in the 'test' di
 
 ##To Do:
 
-* Minified dist files
-* Bower support
 * Test with Ajax functions
