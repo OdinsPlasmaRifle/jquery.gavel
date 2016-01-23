@@ -1,23 +1,23 @@
 <html>
     <head>
         <title>Gavel Example</title>
-        <script type="text/javascript" src="vendor/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <script type="text/javascript" src="../src/jquery.gavel.js"></script>
         <script>
             $(document).ready(function(){
 
-                // You can use the following to call gavel with default values:
+                // Default gavel instantiation:
                 //
                 // $("#example").gavel() 
                 //
-                // Otherwise overide the defaults, for a full list of options see the gavel documentation
-                $("#example").gavel({             
+                // Otherwise overide the defaults. For a full list of options see the gavel documentation
+                $("#example").gavel({
                     afterEach      : testEachFunction,
                     afterAll       : testAllFunction,
                     validation : {
                         required : { //This is how you overide the message of a rule
                             message : "You must insert a value for this field"
-                        },                   
+                        },
                         custom1 : { // This is how you add a custom validation rule that calls a function
                             message : 'Must equal 123 - the following is a tag replaced value: {tag1}!',
                             regex   : null,
@@ -27,12 +27,12 @@
                             message : 'Required - the following is a tag replaced value!', // Tag replacement is not available for regex validation
                             regex   : /\S+/,
                             method  : null
-                        }                        
+                        }
                     }
                 });
 
                 // Custom user specified function that occurs after each element is validated
-                // Use for common/generic things that should occur on every element's validation
+                // Use for common/generic validation that should occur on a per element basis
                 function testEachFunction(valid, element) {
                     // To overide an elements validity change the 'valid' object like this:
                     //
@@ -41,7 +41,7 @@
                     //
                     // Example:
 
-                    // take note the following should be done through the validation functionality rather than here
+                    // take note, this is an example and the following should normally be done through the validation functionality
                     if(element.attr('name') === 'example_input1' && element.val() !== 'asd') {
                         valid.error = true;
                         valid.message = "This field must have a value of 'asd'";
@@ -83,9 +83,9 @@
     </head>
     <body>
         <form method="GET" name="example" id="example">
-            <!-- 
+            <!--
                 Include a 'data-gavel' attribute for any inputs that should be run through the validation
-                
+
                 An additional attribute of 'data-gavel-rules' can be used to set any rules the field must be validated against.
                 data-gavel-rules should be pipe separated and if an any additional data needs to be passed wth the rule, enclose the extra data between square brackets:
 
@@ -94,7 +94,7 @@
                 An additional rule can be passed in order to indicate a specific error container:
 
                 data-gavel-errorcont=".errorContainer"
-            -->        
+            -->
             <label for="example_input1">Required Field</label><br/>
             <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic"/><br/>
 
