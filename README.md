@@ -33,7 +33,7 @@ You will now want to add a list of rules the input should validate against:
 
 ```html
 <form method="GET" name="example" id="example">
-    <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic"/>
+    <input name="example_input1" type="text" data-gavel="required|alphabetic"/>
     <input value="Submit" id="submit" type="submit"/>
 </form>
 ```
@@ -50,7 +50,7 @@ To specifiy a different container for errors, add 'data-gavel-errorcont' like th
 
 ```html
 <form method="GET" name="example" id="example">
-    <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic" data-gavel-errorcont=".errorContainer1"/>
+    <input name="example_input1" type="text" data-gavel="required|alphabetic" data-gavel-errorcont=".errorContainer1"/>
     <div class="errorContainer1"></div>
     <input value="Submit" id="submit" type="submit"/>
 </form>
@@ -76,16 +76,16 @@ formEvents | array|['submit'] | List of form events that trigger Gavel validatio
 
 Rule | Message | Usage
 ---- | ------- | -----
-alphanumeric | Only alphanumeric characters are permitted | data-gavel-rules="alphanumeric"
-numeric | Only numeric characters are permitted | data-gavel-rules="numeric"
-alphabetic | Only alphabetic characters are permitted | data-gavel-rules="alphabetic"
-email | Only valid email addresses are permitted | data-gavel-rules="email"
-telephone | Only valid telephone numbers are permitted (eg. +27 00 000 0000) | data-gavel-rules="telephone"
-date | Only valid dates are permitted (eg. dd-mm-yyyy) | data-gavel-rules="date"
-required | This is a required field | data-gavel-rules="required"
-match | The fields must match | data-gavel-rules="match[name_of_element_to_match]"
-min | The min characters permitted is {min} | data-gavel-rules="min[10]"
-max | The max characters permitted is {max} | data-gavel-rules="max[15]"
+alphanumeric | Only alphanumeric characters are permitted | data-gavel="alphanumeric"
+numeric | Only numeric characters are permitted | data-gavel="numeric"
+alphabetic | Only alphabetic characters are permitted | data-gavel="alphabetic"
+email | Only valid email addresses are permitted | data-gavel="email"
+telephone | Only valid telephone numbers are permitted (eg. +27 00 000 0000) | data-gavel="telephone"
+date | Only valid dates are permitted (eg. dd-mm-yyyy) | data-gavel="date"
+required | This is a required field | data-gavel="required"
+match | The fields must match | data-gavel="match[name_of_element_to_match]"
+min | The min characters permitted is {min} | data-gavel="min[10]"
+max | The max characters permitted is {max} | data-gavel="max[15]"
 
 You can overide the above rules. To do this, alter the instantiation of Gavel:
 
@@ -204,7 +204,7 @@ function custom1Function(element, extra) {
 Usage: 
 
 ```html
-data-gavel-rules="custom1"
+data-gavel="custom1"
 ```
 
 ###Messages
@@ -236,8 +236,3 @@ The above custom function will replace '{tag1}' (if found in the rule's message)
 ##Examples
 
 For example plugin usage take a look at the 'example.html' file in the 'test' directory. It contains examples of almost every features available to the plugin.
-
-
-##To Do:
-
-* Test with Ajax functions
