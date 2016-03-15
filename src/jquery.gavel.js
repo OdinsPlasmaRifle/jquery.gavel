@@ -7,7 +7,7 @@
  *
  *
  * jQuery Gavel Plugin
- * version: 1.1.0
+ * version: 1.2.0
  * Requires jQuery v1.7 or later
  * Copyright (c) 2015 Joshua van Besouw
  * Project repository: https://github.com/odinsplasmarifle/jquery.gavel
@@ -163,7 +163,7 @@
 			 		res.error = userRes.error;
 				}
 			}
-			// Outpust an error if one exists
+			// Output an error if one exists
 			if (res.error) {
 				self.outPutError(element, res.message);
 			}
@@ -198,9 +198,9 @@
 			};
 
 			// Check if a valid element with gavel rules
-			if (typeof element !== 'undefined' && typeof element.data('gavel-rules') !== 'undefined') {
+			if (typeof element !== 'undefined' && typeof element.data('gavel') !== 'undefined') {
 				// Get all gavel rules on an element
-				var rules = element.data('gavel-rules').split('|');
+				var rules = element.data('gavel').split('|');
 				// Loop through each rule
 				$.each(rules, function(index, rule) {
 					// If a regex validated field use regex to validate
@@ -322,7 +322,7 @@
 			var type = element.attr('type');
 			var name = element.attr('name');
 			var uid = self.getUid(element);
-			element.attr('data-gavel', 'true');
+			element.attr('data-gavel-status', 'true');
 			element.removeClass(self.config.errorClass);
 			if (self.config.errorText) {
 				if (type === 'radio') {
@@ -345,7 +345,7 @@
 								'" data-gavel-error-uid="' + uid + 
 								'" data-gavel-error-name="' + name + '">' + 
 								error + '</' + self.config.errorContainer + '>';
-			element.attr('data-gavel', 'false');
+			element.attr('data-gavel-status', 'false');
 			element.addClass(self.config.errorClass);
 			if (self.config.errorText) {
 				// If a container is specified append the error

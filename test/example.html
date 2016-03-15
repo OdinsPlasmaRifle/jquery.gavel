@@ -86,35 +86,35 @@
             <!--
                 Include a 'data-gavel' attribute for any inputs that should be run through the validation
 
-                An additional attribute of 'data-gavel-rules' can be used to set any rules the field must be validated against.
-                data-gavel-rules should be pipe separated and if an any additional data needs to be passed wth the rule, enclose the extra data between square brackets:
+                'data-gavel' can be used to set any rules the field must be validated against.
+                data-gavel should be pipe separated and if an any additional data needs to be passed wth the rule, enclose the extra data between square brackets:
 
-                data-gavel-rules="required|email|max[50]"
+                data-gavel="required|email|max[50]"
 
                 An additional rule can be passed in order to indicate a specific error container:
 
                 data-gavel-errorcont=".errorContainer"
             -->
             <label for="example_input1">Required Field</label><br/>
-            <input name="example_input1" type="text" data-gavel data-gavel-rules="required|alphabetic"/><br/>
+            <input name="example_input1" type="text" data-gavel="required|alphabetic"/><br/>
 
             <label for="example_input2">Match Field</label><br/>
-            <input name="example_input2" type="text" data-gavel data-gavel-rules="required|match[example_input1]"/><br/>
+            <input name="example_input2" type="text" data-gavel="required|match[example_input1]"/><br/>
 
             <label for="example_input3">Numeric Field</label><br/>
-            <input name="example_input3" type="text" data-gavel data-gavel-rules="required|numeric"/><br/>
+            <input name="example_input3" type="text" data-gavel="required|numeric"/><br/>
 
             <label for="example_input4">Email with min/max</label><br/>
-            <input name="example_input4" type="text" data-gavel data-gavel-rules="email|min[10]|max[15]"/><br/>
+            <input name="example_input4" type="text" data-gavel="email|min[10]|max[15]"/><br/>
 
             <label for="example_input5">Custom Field</label><br/>
-            <input name="example_input5" type="text" data-gavel data-gavel-rules="custom1|alphanumeric"/><br/>
+            <input name="example_input5" type="text" data-gavel="custom1|alphanumeric"/><br/>
 
             <label for="example_input6">Date field</label><br/>
-            <input name="example_input6" type="text" data-gavel data-gavel-rules="date"/><br/>
+            <input name="example_input6" type="text" data-gavel="date"/><br/>
 
             <label for="example_input7">Telephone Field</label><br/>
-            <input name="example_input7" type="text" data-gavel data-gavel-rules="telephone"/>
+            <input name="example_input7" type="text" data-gavel="telephone"/>
 
             <br/><br/>
 
@@ -124,9 +124,9 @@
                 Only the 'required' rule works here. A single radio button for a button group must be selected to pass validation
             -->
             <label for="radio1">Radio 1</label><br>
-            <input type="radio" name="radio1" value="r1" data-gavel data-gavel-rules="required" data-gavel-errorcont=".errorContainer"><br/>
+            <input type="radio" name="radio1" value="r1" data-gavel="required" data-gavel-errorcont=".errorContainer"><br/>
             <label for="radio2">Radio 2</label><br>
-            <input type="radio" name="radio1" value="r2" data-gavel data-gavel-rules="required" data-gavel-errorcont=".errorContainer"><br/>
+            <input type="radio" name="radio1" value="r2" data-gavel="required" data-gavel-errorcont=".errorContainer"><br/>
             <div class="errorContainer"></div>
 
             <br/><br/>
@@ -137,10 +137,10 @@
                 Only the 'required' rule works here. Works on a per checkbox basis.
             -->
             <label for="checkbox1">Checkbox 1</label><br>
-            <input type="checkbox" name="checkbox1" value="c1" data-gavel data-gavel-rules="required" data-gavel-errorcont=".errorContainer2"><br>
+            <input type="checkbox" name="checkbox1" value="c1" data-gavel="required" data-gavel-errorcont=".errorContainer2"><br>
             <div class="errorContainer2"></div><br/>
             <label for="checkbox2">Checkbox 2</label><br>
-            <input type="checkbox" name="checkbox1" value="c2" data-gavel data-gavel-rules="required" data-gavel-errorcont=".errorContainer3">
+            <input type="checkbox" name="checkbox1" value="c2" data-gavel="required" data-gavel-errorcont=".errorContainer3">
             <div class="errorContainer3"></div>
 
             <br><br/>
@@ -150,7 +150,7 @@
 
                 All validation rules will work here, but it makes no sense to use anything but 'required'.
             -->
-            <select name="select1" data-gavel data-gavel-rules="required">
+            <select name="select1" data-gavel="required">
                 <option value="">Select...</option>
                 <option value="s1">Option 1</option>
                 <option value="s2">Option 2</option>
