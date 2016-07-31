@@ -2,7 +2,7 @@
 
 Easily extendable jQuery validation plugin. This plugin acts as a highly customizable framework for validation rather than a "fully-featured" validation engine. It provides basic validation for most situations but its strength lies in how easy it is to add additional features.
 
-NOTE: There is an error with multiselect validation, see [here](https://github.com/OdinsPlasmaRifle/jquery.gavel/issues/1) for details.
+**NOTE: There is an error with multiselect validation, see [here](https://github.com/OdinsPlasmaRifle/jquery.gavel/issues/1) for details.**
 
 ##Usage
 
