@@ -4,7 +4,7 @@ Easily extendable jQuery validation plugin. This plugin acts as a highly customi
 
 **NOTE: There is an error with multiselect validation, see [here](https://github.com/OdinsPlasmaRifle/jquery.gavel/issues/1) for details.**
 
-##Usage
+## Usage
 
 To add Gavel to a project, inlcude the jquery library as well as jquery.gavel in the ```<head>``` of your HTML:
 
@@ -60,7 +60,7 @@ To specifiy a different container for errors, add 'data-gavel-errorcont' like th
 
 This can be useful when dealing with radio and checbox inputs.
 
-###Settings
+### Settings
 
 Option | Type | Default | Description
 ------ | ---- | ------- | -----------
@@ -74,7 +74,7 @@ validation | object | See 'Rules' below | Object containing all validation rules
 inputEvents | array|['keyup', 'change', 'blur'] | List of input events that trigger Gavel validation
 formEvents | array|['submit'] | List of form events that trigger Gavel validation
 
-###Rules
+### Rules
 
 Rule | Message | Usage
 ---- | ------- | -----
@@ -122,7 +122,7 @@ $("#example").gavel({
 });
 ```
 
-###Custom Function Formats
+### Custom Function Formats
 
 Gavel allows you to use custom functions when declaring afterEach, afterAll and custom validation rules. There are certain guidelines you should follow when creating these functions:
 
@@ -209,7 +209,7 @@ Usage:
 data-gavel="custom1"
 ```
 
-###Messages
+### Messages
 
 Gavel has a tag replacement system that can be used to easily implement messages with parts that change based on a variable. This tag replacement system will work when a custom function is used or when certain built in functions are used.
 
@@ -235,6 +235,6 @@ function custom1Function(element, extra) {
 
 The above custom function will replace '{tag1}' (if found in the rule's message) with 'Replaced Tag'. 
 
-##Examples
+## Examples
 
 For example plugin usage take a look at the 'example.html' file in the 'test' directory. It contains examples of almost every features available to the plugin.
